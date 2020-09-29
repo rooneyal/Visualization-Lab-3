@@ -1,8 +1,8 @@
-d3.csv('cities.numbers').then(data=>{
-	console.log('cities.numbers', data);
+d3.csv('cities.csv').then(data=>{
+	console.log('cities', data);
 })
 
-d3.csv('cities.numbers', d=>{
+d3.csv('cities.csv', d=>{
     return {
       ...d, // spread operator
       eu: d.eu==='true', // convert to boolean
@@ -11,5 +11,5 @@ d3.csv('cities.numbers', d=>{
       y: +d.y,
     }
   }).then(data=>{
-      console.log('cities.numbers', data);
+      console.log('cities', data);
   })
