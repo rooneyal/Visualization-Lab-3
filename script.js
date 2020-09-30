@@ -115,22 +115,8 @@ d3.csv('cities.csv', d3.autoType).then(data=>{
     .attr('y',function(d) {
       return y(d.building);
     })
-    .attr('fill', 'lightblue');
+    .attr('fill', 'lightblue')
 
-  svg.selectAll('container2')
-    .data(data)
-    .enter()
-    .append('text')
-    .text(function(d) {
-      return d.building + ', ' + d.height_ft + ' ft';
-    })
-    .attr('font-size', 11)
-    .attr('fill', 'black')
-    .attr('y', function(d){ 
-      return y(d['building']) + y.bandwidth()/2;
-    })
-    .attr('text-anchor', 'start')
-    
     .on("click", function(d) {
       console.log("Click")
 
@@ -161,7 +147,41 @@ d3.csv('cities.csv', d3.autoType).then(data=>{
       })
 
 
+  svg.selectAll('container2')
+    .data(data)
+    .enter()
+    .append('text')
+    .text(function(d) {
+      return d.height_ft + ' ft';
+    })
+    .attr('font-size', 11)
+    .attr('fill', 'black')
+    .attr('x', function(d) {
+      return x(d.height_ft * 19.5)
+    })
+    .attr('y', function(d){ 
+      return y(d['building']) + y.bandwidth()/2;
+    })
+    .attr('text-anchor', 'end')
+
+    
+
+  svg.selectAll('.container1')
+		.data(data)
+		.enter()
+		.append('text')
+		.text(function(d)
+		{
+			return d.building
+		})
+		.attr('x', 0)
+		.attr('y', function(d){ 
+      return y(d['building']) + y.bandwidth()/2;
+    })
+		.attr('font-size', 10)
+
 
  })
+
 
 
