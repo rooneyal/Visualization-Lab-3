@@ -130,6 +130,7 @@ d3.csv('cities.csv', d3.autoType).then(data=>{
       return y(d['building']) + y.bandwidth()/2;
     })
     .attr('text-anchor', 'start')
+    
     .on("click", function(d) {
       console.log("Click")
 
@@ -158,6 +159,8 @@ d3.csv('cities.csv', d3.autoType).then(data=>{
       d3.select(this).transition()
         .duration('50')
       })
+
+
 
  })
 
