@@ -72,9 +72,8 @@ d3.csv('cities.csv', d3.autoType).then(data=>{
  })
 
 
-d3.csv('buildings.csv', d3.autoType).then(data=>{
+ d3.csv('buildings.csv', d3.autoType).then(data=>{
 
-  
   console.log('buildings', data)
 
   data.sort((a,b)=>b.height_ft-a.height_ft);
@@ -88,35 +87,78 @@ d3.csv('buildings.csv', d3.autoType).then(data=>{
     .attr('width', width)
     .attr('height', height)
 
-    
+
+  const margin = {top: 30, right: 20, bottom: 30, left: 50};
+
+
   const x = d3.scaleLinear()
-    .domain([0,5000])
+    .domain([0,50000])
     .range([0, width]);
 
+    
   const y = d3.scaleBand()
     .range([0, height])
     .domain(data.map(function(d) {
-      return d.height_ft;
+      return d.building;
     }))
+    .paddingInner(0.15);
 
   svg.selectAll('rect')
     .data(data)
     .enter()
     .append('rect')
-
-    .attr('x', function(d) {
-      return x(d.height_ft);
+    .attr('width', function(d) {
+      return x(d.height_ft * 20);
     })
-    .attr('y', function(d) {
+    .attr('height', y.bandwidth())
+    .attr('x', x(0))
+    .attr('y',function(d) {
       return y(d.building);
     })
-    .attr('width', function(d) {
-      return x(d.height_ft);
+    .attr('fill', 'lightblue');
+
+  svg.selectAll('container2')
+    .data(data)
+    .enter()
+    .append('text')
+    .text(function(d) {
+      return d.building + ', ' + d.height_ft + ' ft';
     })
-    .attr('fill', 'lightblue')
+    .attr('font-size', 11)
+    .attr('fill', 'black')
+    .attr('y', function(d){ 
+      return y(d['building']) + y.bandwidth()/2;
+    })
+    .attr('text-anchor', 'start')
+    .on("click", function(d) {
+      console.log("Click")
 
+      let data = d.path[0].__data__;
+      d3.select('.image')
+        .attr("src", (d,i) => data.image);
+      d3.select(".name")
+        .text(d=>data.building)
+      d3.select('.height')
+        .text(d=>data.height_ft);
+      d3.select('.city')
+        .text(d=>data.city);
+      d3.select('.country')
+        .text(d=>data.country);
+      d3.select('.floors')
+        .text(d=>data.floors);
+      d3.select('.completed')
+        .text(d=>data.completed);
+    })
 
-
-
+    .on('mouseon', function (d, i) {
+      d3.select(this).transition()
+        .duration('50')
+      })
+    .on('mouseout', function (d, i) {
+      d3.select(this).transition()
+        .duration('50')
+      })
 
  })
+
+
