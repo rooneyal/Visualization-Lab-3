@@ -108,10 +108,10 @@ d3.csv('cities.csv', d3.autoType).then(data=>{
     .enter()
     .append('rect')
     .attr('width', function(d) {
-      return x(d.height_ft * 20);
+      return x(d.height_ft * 10);
     })
     .attr('height', y.bandwidth())
-    .attr('x', x(0))
+    .attr('x', 150)
     .attr('y',function(d) {
       return y(d.building);
     })
@@ -157,13 +157,12 @@ d3.csv('cities.csv', d3.autoType).then(data=>{
     .attr('font-size', 11)
     .attr('fill', 'black')
     .attr('x', function(d) {
-      return x(d.height_ft * 19.5)
+      return x(d.height_ft * 10 + 14500);
     })
     .attr('y', function(d){ 
       return y(d['building']) + y.bandwidth()/2;
     })
     .attr('text-anchor', 'end')
-
     
 
   svg.selectAll('.container1')
